@@ -30,11 +30,40 @@ The Poisson distribution is the discrete probability distribution of the number 
 ![image](https://user-images.githubusercontent.com/103921593/230282876-f4a5afbf-cac1-4648-a1b0-c78840638a8e.png)
 
 # Program :
+```
+import numpy as np
+import math
+from collections import Counter
 
+
+data = [int(i) for i in input("Enter arrival data: ").split()]
+
+N = len(data)
+
+lam = np.mean(data)
+
+freq = Counter(data)
+
+x_values = sorted(freq.keys())
+observed = np.array([freq[x] for x in x_values])
+
+poisson_prob = [(math.exp(-lam) * lam**x) / math.factorial(x) for x in x_values]
+
+expected = np.array([p * N for p in poisson_prob])
+
+chi_square = np.sum((observed - expected)**2 / expected)
+
+print("\nX\tObserved\tExpected")
+for i in range(len(x_values)):
+    print(f"{x_values[i]}\t{observed[i]:.2f}\t\t{expected[i]:.2f}")
+
+print("\nMean (λ) =", round(lam,3))
+print("Chi-Square value =", round(chi_square,3))
+```
  
 
 # Output : 
-
+![alt text](output2.png)
 
 
 # Results
